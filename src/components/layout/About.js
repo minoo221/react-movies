@@ -1,18 +1,13 @@
 import React from 'react';
 
-function Header() {
+function About() {
     return(
-        <header style={headerStyle}>
-            <h1>TodoList</h1>
-        </header>
+        <React.Fragment>
+            <h1>About</h1>
+            <p>This is Todolist</p>
+        </React.Fragment>
     )
 }
 
-const headerStyle = {
-    background: '#333333',
-    color: '#ffffff',
-    textAlign: 'center',
-    padding: '10px'
-}
 
-export default Header;
+export default About;

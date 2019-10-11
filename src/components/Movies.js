@@ -1,19 +1,65 @@
 import React from 'react';
-import Todo from './Todo';
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
+import { List, Avatar } from 'antd';
+import InfiniteScroll from 'react-infinite-scroller';
 
-class Todos extends React.Component {
+class Movies extends React.Component {
+    state = {
+        loading: false,
+        hasMore: true,
+    };
+
+    handleInfiniteOnLoad = () => {
+        let data = this.props.movies;
+        this.setState({
+            loading: true,
+        });
+        if (data.length > 3) {
+            this.setState({
+                hasMore: false,
+                loading: false,
+            });
+            return;
+        }
+        this.fetchData(res => {
+            data = data.concat(res.results);
+            this.setState({
+                data,
+                loading: false,
+            });
+        });
+    };
+
     render() {
-        return this.props.todos.map((todo) => (
-            <Todo key={todo.id} todo={todo} markComplete={this.props.markComplete} deleteItem={this.props.deleteItem}/>
-        ));
+        return (
+        <InfiniteScroll
+            initialLoad={false}
+            pageStart={0}
+            loadMore={this.handleInfiniteOnLoad}
+            hasMore={!this.state.loading && this.state.hasMore}
+            useWindow={false}
+        >
+        <List
+            itemLayout="horizontal"
+            dataSource={this.props.movies}
+            renderItem={item => (
+                <List.Item  actions={[<Link to={`/${item.imdbID}`}>Detail</Link>]}>
+                    <List.Item.Meta
+                        avatar={<Avatar src={item.Poster} />}
+                        title={<a href="https://ant.design">{item.Title}</a>}
+                        description={item.Year}
+                    />
+                </List.Item>
+            )}
+        />
+        </InfiniteScroll>
+        )
     }
 }
 
-Todos.propTypes = {
-    todos: PropTypes.array.isRequired,
-    markComplete: PropTypes.func.isRequired,
-    deleteItem: PropTypes.func.isRequired
+Movies.propTypes = {
+    movies: PropTypes.array.isRequired,
 }
 
-export default Todos;
+export default Movies;

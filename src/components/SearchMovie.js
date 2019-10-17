@@ -8,7 +8,7 @@ const { Search } = Input;
 class SearchMovie extends React.Component {
     state = {
         title: '',
-        todos: {}
+        movies: {}
     };
 
     onChange = (e) => this.setState({[e.target.name]: e.target.value})
@@ -19,10 +19,15 @@ class SearchMovie extends React.Component {
         this.setState({title: ''})*/
         const value =  this.state.title;
         axios.get(`http://www.omdbapi.com/?s=${value}&apikey=cc45b81`).then(res => {
-            const todos = res.data;
-                console.log(this.state.todos.Search);
-            this.setState({ todos });
-            this.props.searchMovies(this.state.todos.Search);
+            const movies = res.data;
+            this.setState({ movies });
+            this.props.searchMovies(this.state.movies.Search);
+            /*var retrievedObject = localStorage.getItem('testObject');
+
+            console.log(JSON.parse(retrievedObject));*/
+
+
+
         })
     }
 

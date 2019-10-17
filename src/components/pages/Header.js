@@ -6,7 +6,7 @@ function Header() {
         <header style={headerStyle}>
             <h1 style={headingStyle}>Movies</h1>
             <Link style={linkStyle} to="/">Home</Link>
-            <Link style={linkStyle} to="/about">About</Link>
+            <Link style={linkStyle} to="/favorite">Favorite Movies</Link>
         </header>
     )
 }

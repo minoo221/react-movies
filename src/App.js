@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Movies from './components/Movies';
 import SearchMovie from './components/SearchMovie';
 import Header from './components/pages/Header';
-import About from './components/layout/About';
+import Favorite from './components/layout/FavoriteMovies';
 import MovieDetail from './components/layout/MovieDetail';
 import { Spin } from 'antd';
 import 'antd/dist/antd.css';
@@ -19,12 +19,15 @@ class App extends React.Component {
 
     componentDidMount() {
     }
-    searchMovies = (todos) => {
+    deleteItem = (id) => {
+        this.setState({todos: [...this.state.todos.filter(todo => todo.id !== id)]})
+    };
+    searchMovies = (movies) => {
         this.setState({
             loading: false,
-            movies: todos
+            movies: movies
         })
-    }
+    };
 
     render() {
         return (
@@ -38,8 +41,8 @@ class App extends React.Component {
                             {this.state.loading ? <Spin size="large" /> : <Movies movies={this.state.movies} deleteItem={this.deleteItem}/>}
                         </React.Fragment>
                     )} />
-                    <Route path="/about" component={About} />
-                    <Route exact path="/:imdbID" component={MovieDetail} id={this.state.movies.imdbID} />
+                    <Route path="/favorite" component={Favorite} />
+                    <Route exact path="/movies/:imdbID" component={MovieDetail} id={this.state.movies.imdbID} />
                 </div>
             </div>
             </Router>

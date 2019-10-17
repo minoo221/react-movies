@@ -9,7 +9,6 @@ class MovieDetail extends React.Component {
     };
     componentDidMount() {
         const { match: { params } } = this.props;
-        console.log( params.imdbID );
         axios.get(`http://omdbapi.com/?apikey=cc45b81&i=${params.imdbID}`)
             .then(res => {
                 const movie = res.data;
@@ -17,7 +16,6 @@ class MovieDetail extends React.Component {
                     loading: false,
                     movie: movie
                 })
-                console.log( this.state.movie );
             });
     }
     render() {
